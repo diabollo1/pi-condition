@@ -12,9 +12,9 @@ import os
 import sys
 sys.path.insert(0, '..')
 import pass_pi_temp
+#print pass_pi_temp.host
 
 import MySQLdb
-
 
 print ""
 print "sys.argv:"
@@ -63,7 +63,8 @@ tab={}
 
 # CPU informatiom
 tab["CPU_temp"] = getCPUtemperature()
-tab['CPU_usage'] = getCPUuse()
+
+tab['CPU_usage'] = getCPUuse().replace(",",".")
 
 # RAM information
 # Output is in kb, here I convert it in Mb for readability
@@ -74,9 +75,9 @@ tab["RAM_free"] = round(int(RAM_temp[2]) / 1000,1)
 
 # Disk information
 DISK_temp = getDiskSpace()
-tab["DISK_total"] = DISK_temp[0]
-tab["DISK_free"] = DISK_temp[1]
-tab["DISK_perc"] = DISK_temp[3]
+tab["DISK_total"] = DISK_temp[0][0:-1].replace(",",".")
+tab["DISK_free"] = DISK_temp[1][0:-1].replace(",",".")
+tab["DISK_perc"] = DISK_temp[3][0:-1]
 
 
 for key, value in tab.iteritems():
@@ -87,19 +88,37 @@ print ""
 
 #--------------------------------------------------------------------------------#
 
-query = 'INSERT INTO temp_cpu (temperatura) VALUES ("'+tab["CPU_temp"]+'")'
-print query
+#query = 'INSERT INTO CPU_temp (temperatura) VALUES ("'+tab["CPU_temp"]+'")'
 
 db = MySQLdb.connect(host=pass_pi_temp.host,    # your host, usually localhost
                      user=pass_pi_temp.user,         # your username
                      passwd=pass_pi_temp.passwd,  # your password
                      db=pass_pi_temp.db)        # name of the data base
-
 # you must create a Cursor object. It will let
 # you execute all the queries you need
 cur = db.cursor()
 
+key_temp = ""
+value_temp = ""
+
+print "INSERTy:"
+for key, value in tab.iteritems():
+	key_temp = key_temp + key + ","
+	value_temp = value_temp + str(value) + ","
+
+key_temp = key_temp[0:-1]
+value_temp = value_temp[0:-1]
+print key_temp[0:-1]
+print value_temp[0:-1]
+print ""
+
+query = 'INSERT INTO temp_cpu_ram_disk ('+key_temp+') VALUES ('+value_temp+')'
+print query
+
 cur.execute(query)
+
+
+
 
 db.commit()
 
