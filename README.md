@@ -14,6 +14,13 @@ zurzycie chwilowe ramu
 zajętość dysku
 ```
 
+## WYKONANIE SKRYPTU ##
+
+Skrypt dodany do crontab:
+```
+0 * * * * python /home/pi/admin_skrypt/pi-condition/temp_cpu_ram_disk.py > /dev/null 2>&1
+```
+
 ## STRUKTURA SQL ##
 
 Dane przechowuje w bazie MySQL - MariaDB

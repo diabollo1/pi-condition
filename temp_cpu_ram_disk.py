@@ -6,13 +6,17 @@
 #                                                                       #
 #########################################################################
 
+
 from subprocess import call
 import os
 
+# import sys
+# sys.path.insert(0, '..')
+# import pass_pi_temp.py
+
 import sys
-sys.path.insert(0, '..')
+sys.path.append("/home/pi/admin_skrypt")
 import pass_pi_temp
-#print pass_pi_temp.host
 
 import MySQLdb
 
@@ -45,6 +49,10 @@ def getRAMinfo():
 def getCPUuse():
     return(str(os.popen("top -n1 | awk '/Cpu\(s\):/ {print $2}'").readline().strip()))
 
+print "aaa"
+print getCPUuse()
+print "bbb"
+
 # Return information about disk space as a list (unit included)
 # Index 0: total disk space
 # Index 1: used disk space
@@ -60,6 +68,7 @@ def getDiskSpace():
             return(line.split()[1:5])
 
 tab={}
+
 
 # CPU informatiom
 tab["CPU_temp"] = getCPUtemperature()
@@ -101,10 +110,12 @@ cur = db.cursor()
 key_temp = ""
 value_temp = ""
 
-print "INSERTy:"
+
 for key, value in tab.iteritems():
+	temp=str(value)
+	if str(value) == "" : temp="0"
 	key_temp = key_temp + key + ","
-	value_temp = value_temp + str(value) + ","
+	value_temp = value_temp + temp + ","
 
 key_temp = key_temp[0:-1]
 value_temp = value_temp[0:-1]
@@ -112,6 +123,7 @@ print key_temp[0:-1]
 print value_temp[0:-1]
 print ""
 
+print "INSERT:"
 query = 'INSERT INTO temp_cpu_ram_disk ('+key_temp+') VALUES ('+value_temp+')'
 print query
 
