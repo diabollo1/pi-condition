@@ -1,10 +1,18 @@
 #!/bin/sh
 #Skrypt sprawdzający wolne miejsce i wysyłający maila
+#########################################################################
+#                                                                       #
+#                       Made by: Tomasz Kulinowski                      #
+#                                                                       #
+#########################################################################
+
 
 . "/home/pi/admin_skrypt/pass_pi_temp.sh"
 
 mail_odbiorcy=$mail_tomek
 poziom_alarmu=70
+
+echo "Poziom alarmu:" $poziom_alarmu
 
 #-----------------wartość w procentach zajętości dyku bez znaku %
 VAR1=`df /home | awk '{ print $5 }' | tail -n 1 | sed 's/%//'`
@@ -24,12 +32,12 @@ echo "--------------------------------------------------"
 
 if [ $VAR1 -ge $poziom_alarmu ]
 then
-	temat="!!!!!Za malo miejsca!!!!! $VAR1 %"
+	temat="[ADMIN-PI] raspberry pi dom 1 za mało miejsca! $VAR1 %"
 
 
 	tresc="`df -h`\r\n"
 	tresc="$tresc------------------------------------------\r\n"
-	tresc="$tresc`sudo du -a / --exclude=/media --exclude=/proc | sort -n -r | head -n 20`\r\n"
+	tresc="$tresc`sudo du -a / --exclude=/media --exclude=/proc --exclude=/run | sort -n -r | head -n 20`\r\n"
 
 	
 	echo $temat
