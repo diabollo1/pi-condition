@@ -19,10 +19,10 @@ import pass_pi_temp
 
 import MySQLdb
 
-print ""
-print "sys.argv:"
-print sys.argv
-print ""
+# print ""
+# print "sys.argv:"
+# print sys.argv
+# print ""
 #--------------------------------------------------------------------------------#
 
 #--------------------------------------------------------------------------------#

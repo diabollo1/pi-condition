@@ -1,5 +1,6 @@
 #!/bin/sh
-#Skrypt sprawdzający wolne miejsce i wysyłający maila
+
+#Script checking free space and sending an email
 #########################################################################
 #                                                                       #
 #                       Made by: Tomasz Kulinowski                      #
@@ -14,14 +15,14 @@ poziom_alarmu=70
 
 echo "Poziom alarmu:" $poziom_alarmu
 
-#-----------------wartość w procentach zajętości dyku bez znaku %
+#-----------------value in percent of the drive without the % sign
 VAR1=`df /home | awk '{ print $5 }' | tail -n 1 | sed 's/%//'`
 
-echo "---Dane do maila----------------------------------"
+echo "---Data to e-mail----------------------------------"
 echo "temat:\t\t" $temat
 echo "tresc:\t\t" $tresc
 echo "mail_odbiorcy:\t" $mail_odbiorcy
-echo "--------------------------------------------------"
+echo "---------------------------------------------------"
 
 #echo "---------------------"
 #df -h | grep dost.
@@ -32,7 +33,7 @@ echo "--------------------------------------------------"
 
 if [ $VAR1 -ge $poziom_alarmu ]
 then
-	temat="[ADMIN-PI] raspberry pi dom 1 za mało miejsca! $VAR1 %"
+	temat="[ADMIN-PI] raspberry pi dom 1 not enough space! $VAR1 %"
 
 
 	tresc="`df -h`\r\n"
@@ -46,7 +47,7 @@ then
 	#-----------------wyslanie maila
 	echo "$tresc" | mail -a "Content-Type: text/plain; charset=UTF-8" -s "$temat" $mail_odbiorcy
 else
-	echo "W pyte miejsca" $VAR1 "%"
+	echo "A lot of space" $VAR1 "%"
 fi
 
 
