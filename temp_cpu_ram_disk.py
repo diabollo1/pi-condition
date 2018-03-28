@@ -8,6 +8,7 @@
 
 from subprocess import call
 import os
+import datetime
 
 # import sys
 # sys.path.insert(0, '..')
@@ -48,9 +49,9 @@ def getRAMinfo():
 def getCPUuse():
     return(str(os.popen("top -n1 | awk '/Cpu\(s\):/ {print $2}'").readline().strip()))
 
-print "aaa"
-print getCPUuse()
-print "bbb"
+#print "aaa"
+#print getCPUuse()
+#print "bbb"
 
 # Return information about disk space as a list (unit included)
 # Index 0: total disk space
@@ -87,13 +88,14 @@ tab["DISK_total"] = DISK_temp[0][0:-1].replace(",",".")
 tab["DISK_free"] = DISK_temp[1][0:-1].replace(",",".")
 tab["DISK_perc"] = DISK_temp[3][0:-1]
 
-
+print_temp = ""
 for key, value in tab.iteritems():
-	print key, value
+	print_temp = print_temp + key + "=>" + str(value) + "   "
 
-print ""
 #--------------------------------------------------------------------------------#
-
+data = datetime.date.today()
+data = data.strftime('%Y-%m-%d   ')
+print data, print_temp
 #--------------------------------------------------------------------------------#
 
 #query = 'INSERT INTO CPU_temp (temperatura) VALUES ("'+tab["CPU_temp"]+'")'
@@ -109,7 +111,6 @@ cur = db.cursor()
 key_temp = ""
 value_temp = ""
 
-
 for key, value in tab.iteritems():
 	temp=str(value)
 	if str(value) == "" : temp="0"
@@ -118,13 +119,13 @@ for key, value in tab.iteritems():
 
 key_temp = key_temp[0:-1]
 value_temp = value_temp[0:-1]
-print key_temp[0:-1]
-print value_temp[0:-1]
-print ""
+#print key_temp[0:-1]
+#print value_temp[0:-1]
+#print ""
 
-print "INSERT:"
+#print "INSERT:"
 query = 'INSERT INTO temp_cpu_ram_disk ('+key_temp+') VALUES ('+value_temp+')'
-print query
+#print query
 
 cur.execute(query)
 
