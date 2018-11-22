@@ -87,7 +87,7 @@ Alias "/system" "###/pi-condition-view/"
 
 ## MASZYNA ##
 
-The Raspberry Pi 3 is the third-generation Raspberry Pi. It replaced the Raspberry Pi 2 Model B in February 2016.
+Raspberry Pi 3 B
 Specyfikacja:
 ```
 A 1.2GHz 64-bit quad-core ARMv8 CPU
@@ -109,4 +109,11 @@ Niestandardowe ustawienia (nieistotne dla tego projektu):
 ```
 dtparam=audio=on
 gpu_mem=256
+```
+Zinstalowane:
+```
+Raspbian 4.14.30-v7+
+Apache/2.4.25
+PHP 7.0.27-0+deb9u1
+mysql Ver 15.1 Distrib 10.1.23-MariaDB
 ```

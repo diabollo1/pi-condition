@@ -38,7 +38,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 	
-	$sql = "SELECT * FROM speedtest_net";
+	$sql = "SELECT * FROM speedtest_net ORDER BY czas DESC";
 	$result = mysqli_query($conn, $sql);
 	
 	$naglowek=0;

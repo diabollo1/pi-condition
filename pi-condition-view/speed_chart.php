@@ -43,7 +43,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 	
-	$sql = "SELECT *,DATEDIFF(now(),czas) FROM speedtest_net WHERE DATEDIFF(now(),czas)<10 ORDER BY czas DESC;";
+	$sql = "SELECT *,DATEDIFF(now(),czas) FROM speedtest_net ORDER BY czas DESC";
 	$result = mysqli_query($conn, $sql);
 	
 	$naglowek=0;
@@ -106,12 +106,8 @@ if (!$conn) {
 		
 		//console.log(ping);
 		
-		$.plot("#placeholder", 
-			[
-				{ label: "ping do internetu [ms]", data: ping, yaxis: 2 },
-				{ label: "download z internetu [MB/s]", data: download, yaxis: 1, points: { show: true, symbol: "triangle" } },
-				{ label: "upload do internetu [MB/s]", data: upload, yaxis: 1, points: { show: true, symbol: "triangle" } }
-			],
+
+	var options =
 		{
 			xaxis:
 			{
@@ -129,21 +125,21 @@ if (!$conn) {
 			},
 			xaxes:
 			[{
-				axisLabel: 'Data',
+				axisLabel: "Data",
 			}],
 			yaxes:
 			[
 				{
-					position: 'left',
-					axisLabel: 'Prędkość [MB/s]',
+					position: "left",
+					axisLabel: "Prędkość [MB/s]",
 				},
 				{
-					position: 'right',
-					axisLabel: 'Ping [ms]'
+					position: "right",
+					axisLabel: "Ping [ms]"
 				},
 				{
-					position: 'right',
-					axisLabel: 'Czas wykonania [s]'
+					position: "right",
+					axisLabel: "Czas wykonania [s]"
 				}
 			], 
 			legend:
@@ -159,8 +155,76 @@ if (!$conn) {
 				*/
 			}
 			
+		}
+
+
+
+		//nie chciało skopiować normalnie bo robiło referencje
+		var options1 = JSON.parse(JSON.stringify(options));
+		var options2 = JSON.parse(JSON.stringify(options));
+		var options3 = JSON.parse(JSON.stringify(options));
+		var options4 = JSON.parse(JSON.stringify(options));
+		
+		//po przerobieniu na JSON i z powrotem ginął ten element
+		options1["legend"]["container"]=options["legend"]["container"];
+		options2["legend"]["container"]=options["legend"]["container"];
+		
+		//USTAWIENIA INDYWIDUALNE WYKRESÓW
+		// options1["xaxis"]["min"]=
+		options1["xaxis"]["max"]=(new Date()).getTime();
+		
+		options2["xaxis"]["min"]=(new Date()).getTime()-1000*60*60*24*30;
+		options2["xaxis"]["max"]=(new Date()).getTime();
+		
+		options3["xaxis"]["min"]=(new Date()).getTime()-1000*60*60*24*7;
+		options3["xaxis"]["max"]=(new Date()).getTime();
+		
+		options4["xaxis"]["min"]=(new Date()).getTime()-1000*60*60*24;
+		options4["xaxis"]["max"]=(new Date()).getTime();
+		
+		// console.log((new Date()).getTime());
+		// console.log((new Date()).getTime()-1000*60*60*60);
+		
+		dane =
+			[
+				{ label: "ping do internetu [ms]", data: ping, yaxis: 2 },
+				{ label: "download z internetu [MB/s]", data: download, yaxis: 1, points: { show: true, symbol: "triangle" } },
+				{ label: "upload do internetu [MB/s]", data: upload, yaxis: 1, points: { show: true, symbol: "triangle" } }
+			]
+		
+		$.plot(
+			"#placeholder",
+			dane,
+			options1);
+		
+		$("#latenineties1").click(function () {
+			$.plot(
+				"#placeholder",
+				dane,
+				options1);
 		});
-			
+		
+		$("#latenineties2").click(function () {
+			$.plot(
+				"#placeholder",
+				dane,
+				options2);
+		});
+		
+		$("#latenineties3").click(function () {
+			$.plot(
+				"#placeholder",
+				dane,
+				options3);
+		});
+		
+		$("#latenineties4").click(function () {
+			$.plot(
+				"#placeholder",
+				dane,
+				options4);
+		});
+		
 	});
 
 	</script>
@@ -174,7 +238,11 @@ if (!$conn) {
 			<div id="legendholder" class="demo-placeholder"></div>
 		</div>
 
-	
+		<button id="latenineties1">Cały okres pomiarowy</button>
+		<button id="latenineties2">Ostatni miesiąc</button>
+		<button id="latenineties3">Ostatni tydzień</button>
+		<button id="latenineties4">Ostatni dzień</button>
+		
 	</div>
 	
 	

@@ -38,7 +38,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 	
-	$sql = "SELECT * FROM temp_cpu_ram_disk";
+	$sql = "SELECT * FROM temp_cpu_ram_disk ORDER BY czas DESC";
 	$result = mysqli_query($conn, $sql);
 	
 	$naglowek=0;
