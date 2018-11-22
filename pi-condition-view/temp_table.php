@@ -1,7 +1,6 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="table.css">
-	<script language="javascript" type="text/javascript" src="lib/flot/jquery.js"></script>
 </head>
 
 <body>

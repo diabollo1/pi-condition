@@ -1,8 +1,12 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="table.css">
+	<link rel="shortcut icon" href="">
 	<link rel="stylesheet" type="text/css" href="chart.css">
-	<script language="javascript" type="text/javascript" src="lib/flot/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+	
+	
+	<script language="javascript" type="text/javascript" src="lib/jquery/jquery-3.3.1.min.js"></script>
+	<script language="javascript" type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 	<script language="javascript" type="text/javascript" src="lib/flot/jquery.flot.js"></script>
 	<script language="javascript" type="text/javascript" src="lib/flot/jquery.flot.time.js"></script>
 	<script language="javascript" type="text/javascript" src="lib/flot/jquery.flot.axislabels.js"></script>
@@ -146,13 +150,10 @@ if (!$conn) {
 			{
 				show: true,
 				noColumns: 3,
-				container:$("#legendholder")
-				
-				/*
-				position: "sw",
+				// container:$("#legendholder"),
+				position: "nw",
 				backgroundOpacity: 0,
 				margin: 20
-				*/
 			}
 			
 		}
@@ -197,28 +198,28 @@ if (!$conn) {
 			dane,
 			options1);
 		
-		$("#latenineties1").click(function () {
+		$("#latenineties1").on('change', function() {
 			$.plot(
 				"#placeholder",
 				dane,
 				options1);
 		});
 		
-		$("#latenineties2").click(function () {
+		$("#latenineties2").on('change', function() {
 			$.plot(
 				"#placeholder",
 				dane,
 				options2);
 		});
 		
-		$("#latenineties3").click(function () {
+		$("#latenineties3").on('change', function() {
 			$.plot(
 				"#placeholder",
 				dane,
 				options3);
 		});
 		
-		$("#latenineties4").click(function () {
+		$("#latenineties4").on('change', function() {
 			$.plot(
 				"#placeholder",
 				dane,
@@ -232,16 +233,32 @@ if (!$conn) {
 	
 	<div class="content">
 
+		<div id="option" class="btn-group btn-group-toggle" data-toggle="buttons">
+		  <label class="btn btn-secondary active">
+			<input type="radio" name="options" id="latenineties1" autocomplete="off" checked> Cały okres pomiarowy
+		  </label>
+		  <label class="btn btn-secondary">
+			<input type="radio" name="options" id="latenineties2" autocomplete="off"> Ostatni miesiąc
+		  </label>
+		  <label class="btn btn-secondary">
+			<input type="radio" name="options" id="latenineties3" autocomplete="off"> Ostatni tydzień
+		  </label>
+		  <label class="btn btn-secondary">
+			<input type="radio" name="options" id="latenineties4" autocomplete="off"> Ostatni dzień
+		  </label>
+		</div>
 		
 		<div class="demo-container">
+			<!--<div id="legendholder" class="demo-placeholder"></div>-->
 			<div id="placeholder" class="demo-placeholder"></div>
-			<div id="legendholder" class="demo-placeholder"></div>
 		</div>
-
+		<!--
 		<button id="latenineties1">Cały okres pomiarowy</button>
 		<button id="latenineties2">Ostatni miesiąc</button>
 		<button id="latenineties3">Ostatni tydzień</button>
 		<button id="latenineties4">Ostatni dzień</button>
+		-->
+		
 		
 	</div>
 	
