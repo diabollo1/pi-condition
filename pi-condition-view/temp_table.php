@@ -2,9 +2,20 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="table.css">
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+	
+	<script language="javascript" type="text/javascript" src="lib/jquery/jquery-3.3.1.min.js"></script>
+	<script language="javascript" type="text/javascript" src="color_table.js"></script>
 </head>
 
 <body>
+
+<script>
+	paying_attention_to_high_values('CPU_temp');
+	paying_attention_to_high_values('RAM_used');
+	paying_attention_to_high_values('RAM_free',1);
+	paying_attention_to_high_values('DISK_free',1);
+</script>
+
 <?php
 
 include "tools.php";
