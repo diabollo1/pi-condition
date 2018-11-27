@@ -1,6 +1,7 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="table.css">
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -42,9 +43,8 @@ if (!$conn) {
 	
 	$naglowek=0;
 	
-	echo "<table>";
+	echo "<table class='table table-sm'>";
 	
-		
 		if (mysqli_num_rows($result) > 0)
 		{
 			while($row = mysqli_fetch_assoc($result))
@@ -52,11 +52,12 @@ if (!$conn) {
 				echo "<tr>";
 					if($naglowek == 0)
 					{
-						foreach($row as $key => $s)
-						{
-							echo "<th>".$key."</th>";
-						}
-					
+						echo '<thead class="thead-dark">';
+							foreach($row as $key => $s)
+							{
+								echo "<th scope='col'>".$key."</th>";
+							}
+						echo '</thead>';
 					}
 					$naglowek=1;
 				echo "</tr>";
