@@ -2,9 +2,14 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="table.css">
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+	
+	<script language="javascript" type="text/javascript" src="lib/jquery/jquery-3.3.1.min.js"></script>
+	<script language="javascript" type="text/javascript" src="color_table.js"></script>
+	
 </head>
 
 <body>
+
 <?php
 
 include "tools.php";
@@ -43,7 +48,7 @@ if (!$conn) {
 	
 	$naglowek=0;
 	
-	echo "<table class='table table-sm'>";
+	echo "<table id='tabela' class='table table-sm'>";
 	
 		if (mysqli_num_rows($result) > 0)
 		{
@@ -78,6 +83,8 @@ if (!$conn) {
 	mysqli_close($conn);
 	
 ?>
+
+
 	
 	</div>
 	
