@@ -1,7 +1,5 @@
 function paying_attention_to_high_values(column_name,low=0)
 {
-	$( document ).ready(function() {
-	
 	var table = document.getElementById('tabela');
 	// var cells = table.getElementsByTagName('td');
 	
@@ -62,5 +60,4 @@ function paying_attention_to_high_values(column_name,low=0)
 		return wynik;
 	}
 	
-	});
 }

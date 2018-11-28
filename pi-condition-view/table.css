@@ -8,7 +8,7 @@ table, th, td
     border: 1px solid black;
 }
 
-/*
-tr:nth-child(even) {background: #FFF}
-tr:nth-child(odd) {background: #CCC}
-*/
+#option
+{
+    margin: 20px;
+}
