@@ -93,6 +93,52 @@ if (!$conn) {
 
 	//print_r2_tab_all($ping);
 	
+	$sql = "SELECT *,DATEDIFF(now(),czas) FROM speedtest_net0 ORDER BY czas DESC";
+	$result = mysqli_query($conn, $sql);
+	
+	$naglowek=0;
+	
+	echo "<table>";
+	
+		
+		if (mysqli_num_rows($result) > 0)
+		{
+			while($row = mysqli_fetch_assoc($result))
+			{
+				echo "<tr>";
+					if($naglowek == 0)
+					{
+						foreach($row as $key => $s)
+						{
+							//echo "<th>".$key."</th>";
+						}
+					
+					}
+					$naglowek=1;
+				echo "</tr>";
+				
+				echo "<tr>";
+					foreach($row as $key => $s)
+					{
+						//echo "<td>".$s."</td>";
+					}
+				echo "</tr>";
+				
+				$strtotime_date = strtotime($row["czas"])*1000;
+				
+				$ping0[] = array($strtotime_date,$row["Ping"]);
+				$download0[] = array($strtotime_date,$row["Download"]);
+				$upload0[] = array($strtotime_date,$row["Upload"]);
+				
+			}
+		}
+		echo "</tr>";
+		
+		
+	echo "</table>";
+
+	//print_r2_tab_all($ping);
+	
 	mysqli_close($conn);
 	
 ?>
@@ -107,6 +153,10 @@ if (!$conn) {
 		var ping 		= <?php echo json_encode($ping );?>;
 		var download 	= <?php echo json_encode($download );?>;
 		var upload 		= <?php echo json_encode($upload );?>;
+		
+		var ping0 		= <?php echo json_encode($ping0 );?>;
+		var download0 	= <?php echo json_encode($download0 );?>;
+		var upload0 	= <?php echo json_encode($upload0 );?>;
 		
 		//console.log(ping);
 		
@@ -180,6 +230,15 @@ if (!$conn) {
 		options3["xaxis"]["min"]=(new Date()).getTime()-1000*60*60*24*7;
 		options3["xaxis"]["max"]=(new Date()).getTime();
 		
+		// options4["xaxis"]={
+				// mode: "time",
+				// minTickSize: [1, "hour"],
+				// min: (new Date()).getTime()-1000*60*60*24,
+				// max: (new Date()).getTime()
+				
+			// }
+		options4["xaxis"]["minTickSize"]=[1, "hour"];
+		options4["xaxis"]["timeformat"]="%H:%M";
 		options4["xaxis"]["min"]=(new Date()).getTime()-1000*60*60*24;
 		options4["xaxis"]["max"]=(new Date()).getTime();
 		
@@ -192,38 +251,39 @@ if (!$conn) {
 				{ label: "download z internetu [MB/s]", data: download, yaxis: 1, points: { show: true, symbol: "triangle" } },
 				{ label: "upload do internetu [MB/s]", data: upload, yaxis: 1, points: { show: true, symbol: "triangle" } }
 			]
+		dane0 =
+			[
+				{ label: "ping do internetu [ms]", data: ping0, yaxis: 2 },
+				{ label: "download z internetu [MB/s]", data: download0, yaxis: 1, points: { show: true, symbol: "triangle" } },
+				{ label: "upload do internetu [MB/s]", data: upload0, yaxis: 1, points: { show: true, symbol: "triangle" } }
+			]
 		
-		$.plot(
-			"#placeholder",
-			dane,
-			options1);
 		
-		$("#latenineties1").on('change', function() {
-			$.plot(
-				"#placeholder",
-				dane,
-				options1);
+		$.plot("#placeholder",	dane,	options1);
+		$.plot("#placeholder0",	dane0,	options1);
+		
+		$("#latenineties1").on('change', function()
+		{
+			$.plot("#placeholder",	dane,	options1);
+			$.plot("#placeholder0",	dane0,	options1);
 		});
 		
-		$("#latenineties2").on('change', function() {
-			$.plot(
-				"#placeholder",
-				dane,
-				options2);
+		$("#latenineties2").on('change', function()
+		{
+			$.plot("#placeholder",	dane,	options2);
+			$.plot("#placeholder0",	dane0,	options2);
 		});
 		
-		$("#latenineties3").on('change', function() {
-			$.plot(
-				"#placeholder",
-				dane,
-				options3);
+		$("#latenineties3").on('change', function()
+		{
+			$.plot("#placeholder",	dane,	options3);
+			$.plot("#placeholder0",	dane0,	options3);
 		});
 		
-		$("#latenineties4").on('change', function() {
-			$.plot(
-				"#placeholder",
-				dane,
-				options4);
+		$("#latenineties4").on('change', function()
+		{
+			$.plot("#placeholder",	dane,	options4);
+			$.plot("#placeholder0",	dane0,	options4);
 		});
 		
 	});
@@ -251,6 +311,7 @@ if (!$conn) {
 		<div class="demo-container">
 			<!--<div id="legendholder" class="demo-placeholder"></div>-->
 			<div id="placeholder" class="demo-placeholder"></div>
+			<div id="placeholder0" class="demo-placeholder"></div>
 		</div>
 		<!--
 		<button id="latenineties1">Cały okres pomiarowy</button>

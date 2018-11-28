@@ -4,10 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
 	
 	<script language="javascript" type="text/javascript" src="lib/jquery/jquery-3.3.1.min.js"></script>
-	<script language="javascript" type="text/javascript" src="color_table.js">
-
-	</script>
-	
+	<script language="javascript" type="text/javascript" src="color_table.js"></script>
 </head>
 
 <body>
