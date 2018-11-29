@@ -190,10 +190,6 @@ if (!$conn) {
 				{
 					position: "right",
 					axisLabel: "Ping [ms]"
-				},
-				{
-					position: "right",
-					axisLabel: "Czas wykonania [s]"
 				}
 			], 
 			legend:
