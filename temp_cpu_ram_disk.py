@@ -95,25 +95,9 @@ for key, value in tab.iteritems():
 #--------------------------------------------------------------------------------#
 data = datetime.date.today()
 data = data.strftime('%Y-%m-%d   ')
-print data, print_temp
+print data
+print "   "+print_temp
 #--------------------------------------------------------------------------------#
-
-#query = 'INSERT INTO CPU_temp (temperatura) VALUES ("'+tab["CPU_temp"]+'")'
-
-db = MySQLdb.connect(host=pass_pi_temp.host,    # your host, usually localhost
-                     port=pass_pi_temp.port,
-					 user=pass_pi_temp.user,         # your username
-                     passwd=pass_pi_temp.passwd,  # your password
-                     db=pass_pi_temp.db)        # name of the data base
-db2 = MySQLdb.connect(host=pass_pi_temp.host_linux,    # your host, usually localhost
-                     port=pass_pi_temp.port,
-					 user=pass_pi_temp.user_linux,         # your username
-                     passwd=pass_pi_temp.passwd_linux,  # your password
-                     db=pass_pi_temp.db_linux)        # name of the data base
-# you must create a Cursor object. It will let
-# you execute all the queries you need
-cur = db.cursor()
-cur2 = db2.cursor()
 
 key_temp = ""
 value_temp = ""
@@ -128,11 +112,29 @@ key_temp = key_temp[0:-1]
 value_temp = value_temp[0:-1]
 
 
-query = 'INSERT INTO temp_cpu_ram_disk ('+key_temp+') VALUES ('+value_temp+')'
-print query
+query = 'INSERT INTO '+pass_pi_temp.table_temp+' ('+key_temp+') VALUES ('+value_temp+')'
+print "   "+query
+query2 = 'INSERT INTO '+pass_pi_temp.table_temp_linux+' ('+key_temp+') VALUES ('+value_temp+')'
+print "   "+query2
+
+
+db = MySQLdb.connect(host=pass_pi_temp.host,    # your host, usually localhost
+                     port=pass_pi_temp.port,
+					 user=pass_pi_temp.user,         # your username
+                     passwd=pass_pi_temp.passwd,  # your password
+                     db=pass_pi_temp.db)        # name of the data base
+db2 = MySQLdb.connect(host=pass_pi_temp.host_linux,    # your host, usually localhost
+                     port=pass_pi_temp.port_linux,
+					 user=pass_pi_temp.user_linux,         # your username
+                     passwd=pass_pi_temp.passwd_linux,  # your password
+                     db=pass_pi_temp.db_linux)        # name of the data base
+# you must create a Cursor object. It will let
+# you execute all the queries you need
+cur = db.cursor()
+cur2 = db2.cursor()
 
 cur.execute(query)
-cur2.execute(query)
+cur2.execute(query2)
 
 db.commit()
 db2.commit()
