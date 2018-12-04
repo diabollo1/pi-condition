@@ -50,9 +50,14 @@ db = MySQLdb.connect(host=pass_pi_temp.host,    # your host, usually localhost
                      user=pass_pi_temp.user,         # your username
                      passwd=pass_pi_temp.passwd,  # your password
                      db=pass_pi_temp.db)        # name of the data base
+db2 = MySQLdb.connect(host=pass_pi_temp.host_linux,    # your host, usually localhost
+                     user=pass_pi_temp.user_linux,         # your username
+                     passwd=pass_pi_temp.passwd_linux,  # your password
+                     db=pass_pi_temp.db_linux)        # name of the data base
 # you must create a Cursor object. It will let
 # you execute all the queries you need
 cur = db.cursor()
+cur2 = db2.cursor()
 
 key_temp = ""
 value_temp = ""
@@ -66,21 +71,18 @@ for key, value in tab.iteritems():
 
 key_temp = key_temp[0:-1]
 value_temp = value_temp[0:-1]
-# print key_temp[0:-1]
-# print value_temp[0:-1]
-# print ""
 
-# print "INSERT:"
+
 query = 'INSERT INTO speedtest_net ('+key_temp+') VALUES ('+value_temp+')'
 print "   "+query
 
 cur.execute(query)
-
-
-
+cur2.execute(query)
 
 db.commit()
+db2.commit()
 
 db.close()
+db2.close()
 
 #--------------------------------------------------------------------------------#
