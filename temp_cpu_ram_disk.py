@@ -101,11 +101,13 @@ print data, print_temp
 #query = 'INSERT INTO CPU_temp (temperatura) VALUES ("'+tab["CPU_temp"]+'")'
 
 db = MySQLdb.connect(host=pass_pi_temp.host,    # your host, usually localhost
-                     user=pass_pi_temp.user,         # your username
+                     port=pass_pi_temp.port,
+					 user=pass_pi_temp.user,         # your username
                      passwd=pass_pi_temp.passwd,  # your password
                      db=pass_pi_temp.db)        # name of the data base
 db2 = MySQLdb.connect(host=pass_pi_temp.host_linux,    # your host, usually localhost
-                     user=pass_pi_temp.user_linux,         # your username
+                     port=pass_pi_temp.port,
+					 user=pass_pi_temp.user_linux,         # your username
                      passwd=pass_pi_temp.passwd_linux,  # your password
                      db=pass_pi_temp.db_linux)        # name of the data base
 # you must create a Cursor object. It will let
