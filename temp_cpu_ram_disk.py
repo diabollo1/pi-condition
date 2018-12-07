@@ -89,13 +89,16 @@ tab["DISK_free"] = DISK_temp[1][0:-1].replace(",",".")
 tab["DISK_perc"] = DISK_temp[3][0:-1]
 
 #--------------------------------------------------------------------------------#
-temp_DISK_ext_3t_temp = os.popen('sudo hddtemp sata:/dev/sda1').readline()
-# print temp_DISK_ext_3t_temp
-temp_DISK_ext_3t_temp = temp_DISK_ext_3t_temp.replace("\xc2\xb0C","")
-# print temp_DISK_ext_3t_temp
-temp_DISK_ext_3t_temp = temp_DISK_ext_3t_temp.split()[2:3][0]
-# print temp_DISK_ext_3t_temp
-tab["DISK_ext_3t_temp"] = temp_DISK_ext_3t_temp
+try:
+	temp_DISK_ext_3t_temp = os.popen('sudo hddtemp sata:/dev/sda1').readline()
+	# print temp_DISK_ext_3t_temp
+	temp_DISK_ext_3t_temp = temp_DISK_ext_3t_temp.replace("\xc2\xb0C","")
+	# print temp_DISK_ext_3t_temp
+	temp_DISK_ext_3t_temp = temp_DISK_ext_3t_temp.split()[2:3][0]
+	# print temp_DISK_ext_3t_temp
+	tab["DISK_ext_3t_temp"] = temp_DISK_ext_3t_temp
+except:
+	tab["DISK_ext_3t_temp"] = "";
 #--------------------------------------------------------------------------------#
 
 print_temp = ""
