@@ -98,7 +98,7 @@ try:
 	# print temp_DISK_ext_3t_temp
 	tab["DISK_ext_3t_temp"] = temp_DISK_ext_3t_temp
 except:
-	tab["DISK_ext_3t_temp"] = "";
+	pass
 #--------------------------------------------------------------------------------#
 
 print_temp = ""
